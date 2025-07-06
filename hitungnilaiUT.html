@@ -25,7 +25,7 @@
             background-color: #fff;
             border-radius: 0.75rem;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            max-width: 650px;
+            max-width: 650px; /* Lebar maksimal container */
             margin-top: 1rem;
             margin-bottom: 1rem;
         }
@@ -96,38 +96,7 @@
             }
         }
 
-        /* Penyesuaian untuk form horizontal */
-        .form-group-horizontal {
-            display: flex;
-            align-items: center; /* Menyelaraskan label dan input secara vertikal */
-            margin-bottom: 0.75rem;
-        }
-        .form-group-horizontal label {
-            flex: 0 0 35%; /* Label mengambil 35% lebar */
-            max-width: 35%;
-            padding-right: 1rem; /* Spasi antara label dan input */
-            text-align: right; /* Label rata kanan */
-        }
-        .form-group-horizontal .form-control,
-        .form-group-horizontal .form-select {
-            flex: 1; /* Input mengambil sisa lebar */
-        }
-
-        /* Override untuk layar sangat kecil agar tetap stack */
-        @media (max-width: 575.98px) {
-            .form-group-horizontal {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .form-group-horizontal label {
-                flex: none;
-                max-width: 100%;
-                text-align: left;
-                padding-right: 0;
-                margin-bottom: 0.25rem; /* Sedikit spasi di bawah label */
-            }
-        }
-
+        /* Ini adalah media query kustom untuk ukuran layar sangat kecil */
         @media (max-width: 575.98px) {
             h2 { font-size: 1.65rem; }
             label { font-size: 0.88rem; }
@@ -139,6 +108,7 @@
             .result .fs-4 { font-size: 1.15rem !important; }
         }
 
+        /* Ini adalah media query kustom untuk layar lebar tertentu dengan tinggi terbatas */
         @media (max-height: 750px) and (min-width: 768px) {
             body {
                 padding-top: 0.5rem;
@@ -157,6 +127,16 @@
             .result .fs-5 { font-size: 1.05rem !important; }
             .result .fs-4 { font-size: 1.3rem !important; }
         }
+
+        /* Ini adalah styling dasar untuk form group yang membuat label di atas input */
+        .form-group-custom {
+            margin-bottom: 0.75rem; /* Memberi jarak antar field */
+        }
+        /* Ini memastikan input field mengambil lebar penuh dari parent div-nya */
+        .form-group-custom .form-control,
+        .form-group-custom .form-select {
+            width: 100%;
+        }
     </style>
 </head>
 <body class="d-flex align-items-center justify-content-center min-vh-100 py-3">
@@ -164,13 +144,13 @@
         <h2><center>Kalkulator Nilai Akhir Universitas Terbuka</center></h2>
 
         <form id="nilaiCalculatorForm" class="d-grid">
-            <div class="form-group-horizontal">
+            <div class="form-group-custom">
                 <label for="nama_mk">Nama Mata Kuliah:</label>
                 <input type="text" id="nama_mk" name="nama_mk" required
                        class="form-control">
             </div>
 
-            <div class="form-group-horizontal">
+            <div class="form-group-custom">
                 <label for="jenis_pembelajaran">Jenis Pembelajaran:</label>
                 <select id="jenis_pembelajaran" name="jenis_pembelajaran" required
                         class="form-select">
@@ -181,19 +161,19 @@
                 </select>
             </div>
 
-            <div class="form-group-horizontal">
+            <div class="form-group-custom">
                 <label for="jumlah_benar">Jumlah Jawaban Benar UAS:</label>
                 <input type="number" id="jumlah_benar" name="jumlah_benar" min="0" required
                        class="form-control">
             </div>
 
-            <div class="form-group-horizontal">
+            <div class="form-group-custom">
                 <label for="jumlah_soal">Jumlah Soal UAS:</label>
                 <input type="number" id="jumlah_soal" name="jumlah_soal" min="1" required
                        class="form-control">
             </div>
 
-            <div class="form-group-horizontal">
+            <div class="form-group-custom">
                 <label for="skor_komponen">Skor Tutorial Tatap Muka / Tutorial Online / Tugas Berpraktik (0-100):</label>
                 <input type="number" id="skor_komponen" name="skor_komponen" min="0" max="100" required
                        class="form-control">
@@ -394,3 +374,4 @@
     </script>
 </body>
 </html>
+```
