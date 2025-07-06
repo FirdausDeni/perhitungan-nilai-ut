@@ -209,6 +209,7 @@
                 let nilai_huruf = '';
                 let nilai_mutu = 0;
                 let predikat_nilai = '';
+                let kelompok_nilai = ''; // Added variable for 'kelompok_nilai'
                 let errorMessage = '';
                 let skor_uas = 0;
 
@@ -257,14 +258,14 @@
 
                 // Define thresholds based on the image provided
                 const thresholds = {
-                    A: { min: 80, max: 100, mutu: 4.0, predikat: 'Sangat Baik' },
-                    'A-': { min: 75, max: 79, mutu: 3.5, predikat: 'Sangat Baik' },
-                    B: { min: 70, max: 74, mutu: 3.0, predikat: 'Baik' },
-                    'B-': { min: 65, max: 69, mutu: 2.5, predikat: 'Baik' },
-                    C: { min: 55, max: 64, mutu: 2.0, predikat: 'Cukup' },
-                    'C-': { min: 45, max: 54, mutu: 1.5, predikat: 'Cukup' },
-                    D: { min: 35, max: 44, mutu: 1.0, predikat: 'Kurang' },
-                    E: { min: 0, max: 34, mutu: 0.0, predikat: 'Tidak Lulus' }
+                    A: { min: 80, max: 100, mutu: 4.0, predikat: 'Sangat Baik', kelompok: 'Mudah' },
+                    'A-': { min: 75, max: 79, mutu: 3.5, predikat: 'Sangat Baik', kelompok: 'Mudah' },
+                    B: { min: 70, max: 74, mutu: 3.0, predikat: 'Baik', kelompok: 'Sedang' },
+                    'B-': { min: 65, max: 69, mutu: 2.5, predikat: 'Baik', kelompok: 'Sedang' },
+                    C: { min: 55, max: 64, mutu: 2.0, predikat: 'Cukup', kelompok: 'Sedang' },
+                    'C-': { min: 45, max: 54, mutu: 1.5, predikat: 'Cukup', kelompok: 'Sulit' },
+                    D: { min: 35, max: 44, mutu: 1.0, predikat: 'Kurang', kelompok: 'Sulit' },
+                    E: { min: 0, max: 34, mutu: 0.0, predikat: 'Tidak Lulus', kelompok: 'Sulit' }
                 };
 
                 let foundCategory = false;
@@ -273,6 +274,7 @@
                         nilai_huruf = grade;
                         nilai_mutu = thresholds[grade].mutu;
                         predikat_nilai = thresholds[grade].predikat;
+                        kelompok_nilai = thresholds[grade].kelompok; // Assign 'kelompok_nilai' here
                         foundCategory = true;
                         break;
                     }
@@ -283,6 +285,7 @@
                     nilai_huruf = 'N/A';
                     nilai_mutu = 0.0;
                     predikat_nilai = 'Tidak Diketahui';
+                    kelompok_nilai = 'Tidak Diketahui';
                 }
                 
                 const resultHtml = `
@@ -297,8 +300,8 @@
                         <p class="mb-2 fs-5 text-secondary">Nilai Akhir: <strong class="text-success">${nilai_akhir.toFixed(2)}</strong></p>
                         <p class="mb-2 fs-4 text-secondary">Estimasi Huruf: <strong class="text-success">${nilai_huruf}</strong></p>
                         <p class="mb-2 text-secondary">Nilai Mutu: <strong class="text-success">${nilai_mutu.toFixed(1)}</strong></p>
-                        <p class="mb-0 text-secondary">Predikat Nilai: <strong class="text-success">${predikat_nilai}</strong></p>
-                    </div>
+                        <p class="mb-2 text-secondary">Predikat Nilai: <strong class="text-success">${predikat_nilai}</strong></p>
+                        <p class="mb-0 text-secondary">Kelompok Nilai: <strong class="text-success">${kelompok_nilai}</strong></p> </div>
                 `;
                 resultOutput.innerHTML = resultHtml;
             });
