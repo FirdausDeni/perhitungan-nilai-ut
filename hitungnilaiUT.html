@@ -25,9 +25,10 @@
             background-color: #fff;
             border-radius: 0.75rem;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            max-width: 650px; /* Lebar maksimal container */
+            max-width: 650px;
             margin-top: 1rem;
             margin-bottom: 1rem;
+            padding: 1.5rem 2.5rem; /* DIUBAH: Padding vertikal 1.5rem, horizontal 2.5rem */
         }
         h2 {
             color: #2c3e50;
@@ -85,18 +86,18 @@
         .container-custom {
             padding: 1.5rem;
         }
+        /* Penyesuaian padding untuk breakpoint yang lebih besar */
         @media (min-width: 576px) {
             .container-custom {
-                padding: 2rem;
+                padding: 2rem 3rem; /* Padding vertikal 2rem, horizontal 3rem */
             }
         }
         @media (min-width: 768px) {
             .container-custom {
-                padding: 2.5rem;
+                padding: 2.5rem 3.5rem; /* Padding vertikal 2.5rem, horizontal 3.5rem */
             }
         }
 
-        /* Ini adalah media query kustom untuk ukuran layar sangat kecil */
         @media (max-width: 575.98px) {
             h2 { font-size: 1.65rem; }
             label { font-size: 0.88rem; }
@@ -108,7 +109,6 @@
             .result .fs-4 { font-size: 1.15rem !important; }
         }
 
-        /* Ini adalah media query kustom untuk layar lebar tertentu dengan tinggi terbatas */
         @media (max-height: 750px) and (min-width: 768px) {
             body {
                 padding-top: 0.5rem;
@@ -128,11 +128,9 @@
             .result .fs-4 { font-size: 1.3rem !important; }
         }
 
-        /* Ini adalah styling dasar untuk form group yang membuat label di atas input */
         .form-group-custom {
-            margin-bottom: 0.75rem; /* Memberi jarak antar field */
+            margin-bottom: 1.25rem;
         }
-        /* Ini memastikan input field mengambil lebar penuh dari parent div-nya */
         .form-group-custom .form-control,
         .form-group-custom .form-select {
             width: 100%;
