@@ -14,7 +14,7 @@
     <meta property="og:image" content="URL_GAMBAR_UNTUK_SHARE_SOSMED.jpg">
     <meta property="og:locale" content="id_ID">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNk5lH-ALEwIH" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -234,6 +234,7 @@
 
                 switch (jenis_mk) {
                     case 'TTM':
+                        // Logika jika nilai UAS < 30 ATAU nilai TTM < nilai UAS
                         if (skor_uas < 30 || skor_komponen < skor_uas) {
                             nilai_akhir = skor_uas;
                         } else {
@@ -241,6 +242,7 @@
                         }
                         break;
                     case 'Tutorial Online':
+                        // Logika jika nilai UAS < 30 ATAU nilai Tuton < nilai UAS
                         if (skor_uas < 30 || skor_komponen < skor_uas) {
                             nilai_akhir = skor_uas;
                         } else {
@@ -248,47 +250,41 @@
                         }
                         break;
                     case 'Berpraktik':
+                        // Logika untuk mata kuliah berpraktik
                         nilai_akhir = (0.6 * skor_komponen) + (0.4 * skor_uas);
                         break;
                 }
 
-                
-                const thresholds = { A: 75, AM: 70, B: 65, BM: 55, C: 45, CM: 35, D: 30, E: 0 };
+                // Define thresholds based on the image provided
+                const thresholds = {
+                    A: { min: 80, max: 100, mutu: 4.0, predikat: 'Sangat Baik' },
+                    'A-': { min: 75, max: 79, mutu: 3.5, predikat: 'Sangat Baik' },
+                    B: { min: 70, max: 74, mutu: 3.0, predikat: 'Baik' },
+                    'B-': { min: 65, max: 69, mutu: 2.5, predikat: 'Baik' },
+                    C: { min: 55, max: 64, mutu: 2.0, predikat: 'Cukup' },
+                    'C-': { min: 45, max: 54, mutu: 1.5, predikat: 'Cukup' },
+                    D: { min: 35, max: 44, mutu: 1.0, predikat: 'Kurang' },
+                    E: { min: 0, max: 34, mutu: 0.0, predikat: 'Tidak Lulus' }
+                };
 
-                if (nilai_akhir >= thresholds.A) {
-                    nilai_huruf = 'A';
-                    nilai_mutu = 4.0;
-                    predikat_nilai = 'Sangat Baik';
-                } else if (nilai_akhir >= thresholds.AM) {
-                    nilai_huruf = 'A-';
-                    nilai_mutu = 3.5;
-                    predikat_nilai = 'Sangat Baik';
-                } else if (nilai_akhir >= thresholds.B) {
-                    nilai_huruf = 'B';
-                    nilai_mutu = 3.0;
-                    predikat_nilai = 'Baik';
-                } else if (nilai_akhir >= thresholds.BM) {
-                    nilai_huruf = 'B-';
-                    nilai_mutu = 2.5;
-                    predikat_nilai = 'Baik';
-                } else if (nilai_akhir >= thresholds.C) {
-                    nilai_huruf = 'C';
-                    nilai_mutu = 2.0;
-                    predikat_nilai = 'Cukup';
-                } else if (nilai_akhir >= thresholds.CM) {
-                    nilai_huruf = 'C-';
-                    nilai_mutu = 1.5;
-                    predikat_nilai = 'Cukup';
-                } else if (nilai_akhir >= thresholds.D) {
-                    nilai_huruf = 'D';
-                    nilai_mutu = 1.0;
-                    predikat_nilai = 'Kurang';
-                } else {
-                    nilai_huruf = 'E';
-                    nilai_mutu = 0.0;
-                    predikat_nilai = 'Tidak Lulus';
+                let foundCategory = false;
+                for (const grade in thresholds) {
+                    if (nilai_akhir >= thresholds[grade].min && nilai_akhir <= thresholds[grade].max) {
+                        nilai_huruf = grade;
+                        nilai_mutu = thresholds[grade].mutu;
+                        predikat_nilai = thresholds[grade].predikat;
+                        foundCategory = true;
+                        break;
+                    }
                 }
 
+                if (!foundCategory) {
+                    // Fallback or error handling if somehow no category is matched
+                    nilai_huruf = 'N/A';
+                    nilai_mutu = 0.0;
+                    predikat_nilai = 'Tidak Diketahui';
+                }
+                
                 const resultHtml = `
                     <div class="result p-4 text-center">
                         <p class="mb-2 text-secondary">Hasil Perhitungan untuk MK: <strong class="text-success">${nama_mk}</strong></p>
