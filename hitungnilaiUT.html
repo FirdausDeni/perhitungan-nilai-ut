@@ -14,8 +14,10 @@
         .container-custom {
             background-color: #fff;
             border-radius: 0.75rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 44px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             max-width: 500px;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
         }
         h2 {
             color: #2c3e50;
@@ -70,19 +72,29 @@
             appearance: textfield;
         }
 
-        @media (max-width: 575.98px) {
-             .container-custom {
-                padding-left: 1rem !important;
-                padding-right: 1rem !important;
+        .container-custom {
+            padding: 1.5rem;
+        }
+        @media (min-width: 576px) {
+            .container-custom {
+                padding: 2rem;
             }
-            h2 { font-size: 1.5rem; }
-            label { font-size: 0.9rem; }
-            .form-control, .form-select { font-size: 0.85rem; }
+        }
+        @media (min-width: 768px) {
+            .container-custom {
+                padding: 2.5rem;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            h2 { font-size: 1.65rem; }
+            label { font-size: 0.88rem; }
+            .form-control, .form-select { padding: 0.3rem 0.6rem; font-size: 0.82rem; }
             .btn-primary-custom { padding: 0.4rem 0.6rem; font-size: 0.9rem; }
             .result { padding: 0.6rem; }
-            .result p { font-size: 0.85rem; }
-            .result .fs-5 { font-size: 1rem !important; }
-            .result .fs-4 { font-size: 1.25rem !important; }
+            .result p { font-size: 0.8rem; }
+            .result .fs-5 { font-size: 0.95rem !important; }
+            .result .fs-4 { font-size: 1.15rem !important; }
         }
 
         .form-group-custom {
@@ -92,31 +104,39 @@
             gap: 0.75rem;
         }
 
-        @media (max-height: 700px) and (max-width: 991.98px) {
+        @media (max-height: 750px) and (min-width: 768px) {
             body {
-                padding-top: 1rem !important;
-                padding-bottom: 1rem !important;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
             }
             .container-custom {
-                padding-top: 1rem !important;
-                padding-bottom: 1rem !important;
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
+                padding: 1.5rem;
             }
+            h2 { font-size: 1.8rem; }
+            .form-control, .form-select { padding: 0.3rem 0.6rem; font-size: 0.85rem; }
+            .btn-primary-custom { padding: 0.4rem 0.7rem; font-size: 0.9rem; }
+            .result { padding: 0.6rem; }
+            .result p { font-size: 0.85rem; }
+            .result .fs-5 { font-size: 1.05rem !important; }
+            .result .fs-4 { font-size: 1.3rem !important; }
         }
     </style>
 </head>
-<body class="d-flex align-items-center justify-content-center min-vh-100 py-2">
-    <div class="container-custom p-4 p-md-5 mx-auto">
-        <h2 class="text-center mb-4 fw-bold">Kalkulator Nilai Akhir Universitas Terbuka</h2>
+<body class="d-flex align-items-center justify-content-center min-vh-100 py-3">
+    <div class="container-custom mx-auto">
+        <h2>Kalkulator Nilai Akhir Universitas Terbuka</h2>
 
         <form id="nilaiCalculatorForm" class="d-grid">
             <div class="form-group-custom">
-                <label for="nama_mk" class="form-label">Nama Mata Kuliah:</label>
+                <label for="nama_mk">Nama Mata Kuliah:</label>
                 <input type="text" id="nama_mk" name="nama_mk" required
                        class="form-control">
             </div>
 
             <div class="form-group-custom">
-                <label for="jenis_mk" class="form-label">Jenis Pembelajaran:</label>
+                <label for="jenis_mk">Jenis Pembelajaran:</label>
                 <select id="jenis_mk" name="jenis_mk" required
                         class="form-select">
                     <option value="">-- Pilih Jenis Pembelajaran --</option>
@@ -127,19 +147,19 @@
             </div>
 
             <div class="form-group-custom">
-                <label for="jumlah_benar" class="form-label">Jumlah Jawaban Benar UAS:</label>
+                <label for="jumlah_benar">Jumlah Jawaban Benar UAS:</label>
                 <input type="number" id="jumlah_benar" name="jumlah_benar" min="0" required
                        class="form-control">
             </div>
 
             <div class="form-group-custom">
-                <label for="jumlah_soal" class="form-label">Jumlah Soal UAS:</label>
+                <label for="jumlah_soal">Jumlah Soal UAS:</label>
                 <input type="number" id="jumlah_soal" name="jumlah_soal" min="1" required
                        class="form-control">
             </div>
 
             <div class="form-group-custom">
-                <label for="skor_komponen" class="form-label">Skor TTM / Tutorial Online / Tugas Berpraktik (0-100):</label>
+                <label for="skor_komponen">Skor TTM / Tutorial Online / Tugas Berpraktik (0-100):</label>
                 <input type="number" id="skor_komponen" name="skor_komponen" min="0" max="100" required
                        class="form-control">
             </div>
@@ -222,41 +242,39 @@
                         break;
                 }
 
-                // --- LOGIKA KATEGORI NILAI BARU SESUAI GAMBAR ---
                 if (nilai_akhir > 80) {
                     nilai_huruf = 'A';
                     nilai_mutu = 4.0;
                     predikat_nilai = 'Sangat Baik';
-                } else if (nilai_akhir >= 75) { // Rentang 75-80
+                } else if (nilai_akhir >= 75) {
                     nilai_huruf = 'A-';
                     nilai_mutu = 3.5;
                     predikat_nilai = 'Sangat Baik';
-                } else if (nilai_akhir >= 70) { // Rentang 70-75
+                } else if (nilai_akhir >= 70) {
                     nilai_huruf = 'B';
                     nilai_mutu = 3.0;
                     predikat_nilai = 'Baik';
-                } else if (nilai_akhir >= 65) { // Rentang 65-70
+                } else if (nilai_akhir >= 65) {
                     nilai_huruf = 'B-';
                     nilai_mutu = 2.5;
                     predikat_nilai = 'Baik';
-                } else if (nilai_akhir >= 60) { // Rentang 60-65
+                } else if (nilai_akhir >= 60) {
                     nilai_huruf = 'C';
                     nilai_mutu = 2.0;
                     predikat_nilai = 'Cukup';
-                } else if (nilai_akhir >= 55) { // Rentang 55-60
+                } else if (nilai_akhir >= 55) {
                     nilai_huruf = 'C-';
                     nilai_mutu = 1.5;
                     predikat_nilai = 'Cukup';
-                } else if (nilai_akhir >= 50) { // Rentang 50-55
+                } else if (nilai_akhir >= 50) {
                     nilai_huruf = 'D';
                     nilai_mutu = 1.0;
                     predikat_nilai = 'Kurang';
-                } else { // Rentang <50
+                } else {
                     nilai_huruf = 'E';
                     nilai_mutu = 0.0;
                     predikat_nilai = 'Tidak Lulus';
                 }
-                // --- AKHIR LOGIKA KATEGORI NILAI BARU ---
 
                 const resultHtml = `
                     <div class="result p-4 text-center">
