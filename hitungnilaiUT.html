@@ -146,8 +146,8 @@
             </div>
 
             <div class="form-group-custom">
-                <label for="jenis_mk">Jenis Pembelajaran:</label>
-                <select id="jenis_mk" name="jenis_mk" required
+                <label for="jenis_pembelajaran">Jenis Pembelajaran:</label>
+                <select id="jenis_pembelajaran" name="jenis_pembelajaran" required
                         class="form-select">
                     <option value="">-- Pilih Jenis Pembelajaran --</option>
                     <option value="TTM">TTM (Tutorial Tatap Muka)</option>
@@ -190,6 +190,70 @@
             const form = document.getElementById('nilaiCalculatorForm');
             const resultOutput = document.getElementById('resultOutput');
 
+            const thresholdsByKelompok = {
+                'Mudah': {
+                    'A': { min: 80, max: 100, mutu: 4.0, predikat: 'Sangat Baik' },
+                    'A-': { min: 75, max: 80, mutu: 3.5, predikat: 'Sangat Baik' },
+                    'B': { min: 70, max: 75, mutu: 3.0, predikat: 'Baik' },
+                    'B-': { min: 65, max: 70, mutu: 2.5, predikat: 'Baik' },
+                    'C': { min: 55, max: 60, mutu: 2.0, predikat: 'Cukup' },
+                    'C-': { min: 50, max: 55, mutu: 1.5, predikat: 'Cukup' },
+                    'D': { min: 40, max: 50, mutu: 1.0, predikat: 'Kurang' },
+                    'E': { min: 0, max: 39, mutu: 0.0, predikat: 'Tidak Lulus' }
+                },
+                'Sedang': {
+                    'A': { min: 75, max: 100, mutu: 4.0, predikat: 'Sangat Baik' },
+                    'A-': { min: 70, max: 75, mutu: 3.5, predikat: 'Sangat Baik' },
+                    'B': { min: 65, max: 70, mutu: 3.0, predikat: 'Baik' },
+                    'B-': { min: 60, max: 65, mutu: 2.5, predikat: 'Baik' },
+                    'C': { min: 50, max: 55, mutu: 2.0, predikat: 'Cukup' },
+                    'C-': { min: 45, max: 50, mutu: 1.5, predikat: 'Cukup' },
+                    'D': { min: 35, max: 45, mutu: 1.0, predikat: 'Kurang' },
+                    'E': { min: 0, max: 34, mutu: 0.0, predikat: 'Tidak Lulus' }
+                },
+                'Sulit': {
+                    'A': { min: 70, max: 100, mutu: 4.0, predikat: 'Sangat Baik' },
+                    'A-': { min: 65, max: 70, mutu: 3.5, predikat: 'Sangat Baik' },
+                    'B': { min: 60, max: 65, mutu: 3.0, predikat: 'Baik' },
+                    'B-': { min: 55, max: 60, mutu: 2.5, predikat: 'Baik' },
+                    'C': { min: 45, max: 55, mutu: 2.0, predikat: 'Cukup' },
+                    'C-': { min: 40, max: 45, mutu: 1.5, predikat: 'Cukup' },
+                    'D': { min: 30, max: 40, mutu: 1.0, predikat: 'Kurang' },
+                    'E': { min: 0, max: 29, mutu: 0.0, predikat: 'Tidak Lulus' }
+                }
+            };
+
+            function getGradeDetails(score, kelompokThresholds) {
+                let huruf = '';
+                let mutu = 0;
+                let predikat = '';
+
+                if (score >= kelompokThresholds['A'].min) {
+                    huruf = 'A';
+                } else if (score >= kelompokThresholds['A-'].min) {
+                    huruf = 'A-';
+                } else if (score >= kelompokThresholds['B'].min) {
+                    huruf = 'B';
+                } else if (score >= kelompokThresholds['B-'].min) {
+                    huruf = 'B-';
+                } else if (score >= kelompokThresholds['C'].min) {
+                    huruf = 'C';
+                } else if (score >= kelompokThresholds['C-'].min) {
+                    huruf = 'C-';
+                } else if (score >= kelompokThresholds['D'].min) {
+                    huruf = 'D';
+                } else {
+                    huruf = 'E';
+                }
+                
+                const details = kelompokThresholds[huruf];
+                mutu = details.mutu;
+                predikat = details.predikat;
+
+                return { huruf, mutu, predikat };
+            }
+
+
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
 
@@ -200,16 +264,12 @@
                 }
 
                 const nama_mk = document.getElementById('nama_mk').value;
-                const jenis_mk = document.getElementById('jenis_mk').value;
+                const jenis_pembelajaran = document.getElementById('jenis_pembelajaran').value;
                 const jumlah_benar = parseInt(document.getElementById('jumlah_benar').value);
                 const jumlah_soal = parseInt(document.getElementById('jumlah_soal').value);
                 const skor_komponen = parseInt(document.getElementById('skor_komponen').value);
 
                 let nilai_akhir = 0;
-                let nilai_huruf = '';
-                let nilai_mutu = 0;
-                let predikat_nilai = '';
-                let kelompok_nilai = ''; // Added variable for 'kelompok_nilai'
                 let errorMessage = '';
                 let skor_uas = 0;
 
@@ -219,7 +279,7 @@
                     errorMessage = 'Jumlah Jawaban Benar UAS tidak valid (0-Jumlah Soal).';
                 } else if (skor_komponen < 0 || skor_komponen > 100) {
                     errorMessage = 'Skor TTM/TO/Praktik harus antara 0 dan 100.';
-                } else if (jenis_mk === "") {
+                } else if (jenis_pembelajaran === "") {
                     errorMessage = 'Pilih jenis pembelajaran yang valid.';
                 }
 
@@ -233,9 +293,8 @@
 
                 skor_uas = (jumlah_benar / jumlah_soal) * 100;
 
-                switch (jenis_mk) {
+                switch (jenis_pembelajaran) {
                     case 'TTM':
-                        // Logika jika nilai UAS < 30 ATAU nilai TTM < nilai UAS
                         if (skor_uas < 30 || skor_komponen < skor_uas) {
                             nilai_akhir = skor_uas;
                         } else {
@@ -243,7 +302,6 @@
                         }
                         break;
                     case 'Tutorial Online':
-                        // Logika jika nilai UAS < 30 ATAU nilai Tuton < nilai UAS
                         if (skor_uas < 30 || skor_komponen < skor_uas) {
                             nilai_akhir = skor_uas;
                         } else {
@@ -251,57 +309,60 @@
                         }
                         break;
                     case 'Berpraktik':
-                        // Logika untuk mata kuliah berpraktik
                         nilai_akhir = (0.6 * skor_komponen) + (0.4 * skor_uas);
                         break;
                 }
 
-                // Define thresholds based on the image provided
-                const thresholds = {
-                    A: { min: 80, max: 100, mutu: 4.0, predikat: 'Sangat Baik', kelompok: 'Mudah' },
-                    'A-': { min: 75, max: 79, mutu: 3.5, predikat: 'Sangat Baik', kelompok: 'Mudah' },
-                    B: { min: 70, max: 74, mutu: 3.0, predikat: 'Baik', kelompok: 'Sedang' },
-                    'B-': { min: 65, max: 69, mutu: 2.5, predikat: 'Baik', kelompok: 'Sedang' },
-                    C: { min: 55, max: 64, mutu: 2.0, predikat: 'Cukup', kelompok: 'Sedang' },
-                    'C-': { min: 45, max: 54, mutu: 1.5, predikat: 'Cukup', kelompok: 'Sulit' },
-                    D: { min: 35, max: 44, mutu: 1.0, predikat: 'Kurang', kelompok: 'Sulit' },
-                    E: { min: 0, max: 34, mutu: 0.0, predikat: 'Tidak Lulus', kelompok: 'Sulit' }
-                };
+                const resultMudah = getGradeDetails(nilai_akhir, thresholdsByKelompok['Mudah']);
+                const resultSedang = getGradeDetails(nilai_akhir, thresholdsByKelompok['Sedang']);
+                const resultSulit = getGradeDetails(nilai_akhir, thresholdsByKelompok['Sulit']);
 
-                let foundCategory = false;
-                for (const grade in thresholds) {
-                    if (nilai_akhir >= thresholds[grade].min && nilai_akhir <= thresholds[grade].max) {
-                        nilai_huruf = grade;
-                        nilai_mutu = thresholds[grade].mutu;
-                        predikat_nilai = thresholds[grade].predikat;
-                        kelompok_nilai = thresholds[grade].kelompok; // Assign 'kelompok_nilai' here
-                        foundCategory = true;
-                        break;
-                    }
-                }
-
-                if (!foundCategory) {
-                    // Fallback or error handling if somehow no category is matched
-                    nilai_huruf = 'N/A';
-                    nilai_mutu = 0.0;
-                    predikat_nilai = 'Tidak Diketahui';
-                    kelompok_nilai = 'Tidak Diketahui';
-                }
-                
                 const resultHtml = `
                     <div class="result p-4 text-center">
                         <p class="mb-2 text-secondary">Hasil Perhitungan untuk MK: <strong class="text-success">${nama_mk}</strong></p>
-                        <p class="mb-2 text-secondary">Jenis Pembelajaran: <strong class="text-success">${jenis_mk}</strong></p>
+                        <p class="mb-2 text-secondary">Jenis Pembelajaran: <strong class="text-success">${jenis_pembelajaran}</strong></p>
                         
                         <p class="mb-2 text-secondary">Benar UAS: <strong class="text-success">${jumlah_benar}</strong></p>
                         <p class="mb-2 text-secondary">Soal UAS: <strong class="text-success">${jumlah_soal}</strong></p>
                         <p class="mb-2 text-secondary">Skor UAS: <strong class="text-success">${skor_uas.toFixed(2)}</strong></p>
                         <p class="mb-2 text-secondary">Skor TTM/TO/Praktik: <strong class="text-success">${skor_komponen}</strong></p>
-                        <p class="mb-2 fs-5 text-secondary">Nilai Akhir: <strong class="text-success">${nilai_akhir.toFixed(2)}</strong></p>
-                        <p class="mb-2 fs-4 text-secondary">Estimasi Huruf: <strong class="text-success">${nilai_huruf}</strong></p>
-                        <p class="mb-2 text-secondary">Nilai Mutu: <strong class="text-success">${nilai_mutu.toFixed(1)}</strong></p>
-                        <p class="mb-2 text-secondary">Predikat Nilai: <strong class="text-success">${predikat_nilai}</strong></p>
-                        <p class="mb-0 text-secondary">Kelompok Nilai: <strong class="text-success">${kelompok_nilai}</strong></p> </div>
+                        
+                        <hr class="my-3">
+                        <h4 class="mb-3 text-primary">Nilai Akhir Anda: <strong class="text-success">${nilai_akhir.toFixed(2)}</strong></h4>
+                        
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100 text-bg-success">
+                                    <div class="card-header fw-bold">Kelompok Matkul: Mudah</div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Huruf: ${resultMudah.huruf}</h5>
+                                        <p class="card-text mb-0">Mutu: ${resultMudah.mutu.toFixed(1)}</p>
+                                        <p class="card-text mb-0">Predikat: ${resultMudah.predikat}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100 text-bg-warning">
+                                    <div class="card-header fw-bold">Kelompok Matkul: Sedang</div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Huruf: ${resultSedang.huruf}</h5>
+                                        <p class="card-text mb-0">Mutu: ${resultSedang.mutu.toFixed(1)}</p>
+                                        <p class="card-text mb-0">Predikat: ${resultSedang.predikat}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100 text-bg-danger">
+                                    <div class="card-header fw-bold">Kelompok Matkul: Sulit</div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Huruf: ${resultSulit.huruf}</h5>
+                                        <p class="card-text mb-0">Mutu: ${resultSulit.mutu.toFixed(1)}</p>
+                                        <p class="card-text mb-0">Predikat: ${resultSulit.predikat}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 `;
                 resultOutput.innerHTML = resultHtml;
             });
