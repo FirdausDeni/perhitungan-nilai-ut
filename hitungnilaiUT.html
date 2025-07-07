@@ -457,24 +457,34 @@
 
                 switch (jenis_pembelajaran) {
                     case 'TTM':
-                        if (skor_uas < 30 || skor_komponen < skor_uas) {
+                        if (skor_uas < 30) {
                             nilai_akhir = skor_uas;
-                            rumus_perhitungan = 'Nilai Akhir = Skor UAS (karena Skor UAS > skor TTM dan Skor UAS tidak dibawah 30)';
+                            rumus_perhitungan = 'Nilai Akhir = Skor UAS (Otomatis E)';
+                            keterangan_rumus = 'Nilai akhir otomatis dianggap E karena skor UAS di bawah 30, terlepas dari skor TTM.';
+                        } else if (skor_komponen < skor_uas) {
+                            nilai_akhir = skor_uas;
+                            rumus_perhitungan = 'Nilai Akhir = Skor UAS';
+                            keterangan_rumus = 'Pembobotan 50% untuk UAS dan 50% untuk komponen TTM berlaku jika nilai UAS minimal 30. Namun, jika skor TTM lebih rendah dari skor UAS, nilai akhir diambil dari skor UAS.';
                         } else {
                             nilai_akhir = (0.5 * skor_uas) + (0.5 * skor_komponen);
                             rumus_perhitungan = 'Nilai Akhir = (0.5 * Skor UAS) + (0.5 * Skor Komponen TTM)';
+                            keterangan_rumus = 'Pembobotan 50% untuk UAS dan 50% untuk komponen TTM berlaku jika nilai UAS minimal 30.';
                         }
-                        keterangan_rumus = 'Pembobotan 50% untuk UAS dan 50% untuk komponen TTM berlaku jika nilai UAS minimal 30.';
                         break;
                     case 'Tutorial Online':
-                        if (skor_uas < 30 || skor_komponen < skor_uas) {
+                        if (skor_uas < 30) {
                             nilai_akhir = skor_uas;
-                            rumus_perhitungan = 'Nilai Akhir = Skor UAS (karena Skor UAS > Skor Tutorial Online dan Skor UAS tidak dibawah 30';
+                            rumus_perhitungan = 'Nilai Akhir = Skor UAS (Otomatis E)';
+                            keterangan_rumus = 'Nilai akhir otomatis dianggap E karena skor UAS di bawah 30, terlepas dari skor Tutorial Online.';
+                        } else if (skor_komponen < skor_uas) {
+                            nilai_akhir = skor_uas;
+                            rumus_perhitungan = 'Nilai Akhir = Skor UAS';
+                            keterangan_rumus = 'Pembobotan 70% untuk UAS dan 30% untuk komponen Tutorial Online berlaku jika nilai UAS minimal 30. Namun, jika skor Tutorial Online lebih rendah dari skor UAS, nilai akhir diambil dari skor UAS.';
                         } else {
                             nilai_akhir = (0.7 * skor_uas) + (0.3 * skor_komponen);
                             rumus_perhitungan = 'Nilai Akhir = (0.7 * Skor UAS) + (0.3 * Skor Komponen Tutorial Online)';
+                            keterangan_rumus = 'Pembobotan 70% untuk UAS dan 30% untuk komponen Tutorial Online berlaku jika nilai UAS minimal 30.';
                         }
-                        keterangan_rumus = 'Pembobotan 70% untuk UAS dan 30% untuk komponen Tutorial Online berlaku jika nilai UAS minimal 30.';
                         break;
                     case 'Berpraktik':
                         nilai_akhir = (0.6 * skor_komponen) + (0.4 * skor_uas);
