@@ -465,7 +465,7 @@
                             nilai_akhir = (0.5 * skor_uas) + (0.5 * skor_komponen);
                             rumus_perhitungan = 'Nilai Akhir = (0.5 * Skor UAS) + (0.5 * Skor Komponen TTM)';
                         }
-                        keterangan_rumus = 'Pembobotan 50% untuk UAS dan 50% untuk nilai TTM, dengan syarat nilai UAS minimal 30.';
+                        keterangan_rumus = 'Pembobotan 50% untuk UAS dan 50% untuk nilai TTM, berlaku jika nilai UAS minimal 30.';
                         break;
                     case 'Tutorial Online':
                         if (skor_uas < 30 || skor_komponen < skor_uas) {
@@ -475,7 +475,7 @@
                             nilai_akhir = (0.7 * skor_uas) + (0.3 * skor_komponen);
                             rumus_perhitungan = 'Nilai Akhir = (0.7 * Skor UAS) + (0.3 * Skor Komponen Tutorial Online)';
                         }
-                        keterangan_rumus = 'Pembobotan 70% untuk UAS dan 30% untuk komponen Tutorial Online (nilai tugas dan diskusi), dengan syarat nilai UAS minimal 30.';
+                        keterangan_rumus = 'Pembobotan 70% untuk UAS dan 30% untuk komponen Tutorial Online (nilai tugas dan diskusi), berlaku jika nilai UAS minimal 30.';
                         break;
                     case 'Berpraktik':
                         nilai_akhir = (0.6 * skor_komponen) + (0.4 * skor_uas);
@@ -493,7 +493,7 @@
                             nilai_akhir = (0.8 * skor_uas) + (0.2 * skor_komponen);
                             rumus_perhitungan = 'Nilai Akhir = (0.8 * Skor UAS) + (0.2 * Skor Komponen TMK)';
                         }
-                        keterangan_rumus = 'Pembobotan 80% untuk UAS dan 20% untuk komponen TMK. Ada kondisi khusus di mana nilai akhir bisa menjadi 0 jika UAS sangat rendah, atau hanya mengacu pada nilai UAS jika lebih tinggi dari TMK.';
+                        keterangan_rumus = 'Pembobotan 80% untuk UAS dan 20% untuk TMK berlaku jika nilai UAS minimal 30';
                         break;
                 }
 
