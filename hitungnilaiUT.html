@@ -459,27 +459,27 @@
                     case 'TTM':
                         if (skor_uas < 30 || skor_komponen < skor_uas) {
                             nilai_akhir = skor_uas;
-                            rumus_perhitungan = 'Nilai Akhir = Skor UAS (karena Skor UAS < 30 ATAU Skor Komponen < Skor UAS)';
+                            rumus_perhitungan = 'Nilai Akhir = Skor UAS (karena Skor UAS > skor TTM dan Skor UAS tidak dibawah 30)';
                         } else {
                             nilai_akhir = (0.5 * skor_uas) + (0.5 * skor_komponen);
                             rumus_perhitungan = 'Nilai Akhir = (0.5 * Skor UAS) + (0.5 * Skor Komponen TTM)';
                         }
-                        keterangan_rumus = 'Pembobotan 50% untuk UAS dan 50% untuk komponen TTM (nilai tugas dan partisipasi), dengan syarat tertentu.';
+                        keterangan_rumus = 'Pembobotan 50% untuk UAS dan 50% untuk komponen TTM berlaku jika nilai UAS minimal 30.';
                         break;
                     case 'Tutorial Online':
                         if (skor_uas < 30 || skor_komponen < skor_uas) {
                             nilai_akhir = skor_uas;
-                            rumus_perhitungan = 'Nilai Akhir = Skor UAS (karena Skor UAS < 30 ATAU Skor Komponen < Skor UAS)';
+                            rumus_perhitungan = 'Nilai Akhir = Skor UAS (karena Skor UAS > Skor Tutorial Online dan Skor UAS tidak dibawah 30';
                         } else {
                             nilai_akhir = (0.7 * skor_uas) + (0.3 * skor_komponen);
                             rumus_perhitungan = 'Nilai Akhir = (0.7 * Skor UAS) + (0.3 * Skor Komponen Tutorial Online)';
                         }
-                        keterangan_rumus = 'Pembobotan 70% untuk UAS dan 30% untuk komponen Tutorial Online (nilai tugas dan partisipasi), dengan syarat tertentu.';
+                        keterangan_rumus = 'Pembobotan 70% untuk UAS dan 30% untuk komponen Tutorial Online berlaku jika nilai UAS minimal 30.';
                         break;
                     case 'Berpraktik':
                         nilai_akhir = (0.6 * skor_komponen) + (0.4 * skor_uas);
                         rumus_perhitungan = 'Nilai Akhir = (0.6 * Skor Komponen Praktik) + (0.4 * Skor UAS)';
-                        keterangan_rumus = 'Pembobotan 60% untuk nilai praktik (laporan, praktikum) dan 40% untuk UAS.';
+                        keterangan_rumus = 'Pembobotan 60% untuk nilai praktik dan 40% untuk UAS.';
                         break;
                     default:
                         errorMessage = 'Jenis pembelajaran tidak dikenal.';
