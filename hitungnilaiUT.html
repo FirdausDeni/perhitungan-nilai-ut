@@ -313,7 +313,6 @@
                     <option value="TTM">TTM (Tutorial Tatap Muka)</option>
                     <option value="Tutorial Online">Tutorial Online</option>
                     <option value="Berpraktik">Berpraktik</option>
-                    <option value="TMK">TMK (Tugas Mata Kuliah)</option>
                 </select>
             </div>
 
@@ -330,7 +329,7 @@
             </div>
 
             <div class="form-group-custom">
-                <label for="skor_komponen">Skor Tutorial Tatap Muka / Tutorial Online / Tugas Berpraktik / TMK (0-100):</label>
+                <label for="skor_komponen">Skor Tutorial Tatap Muka / Tutorial Online / Tugas Berpraktik (0-100):</label>
                 <input type="number" id="skor_komponen" name="skor_komponen" min="0" max="100" required
                        class="form-control">
             </div>
@@ -438,7 +437,7 @@
                 } else if (jumlah_benar < 0 || jumlah_benar > jumlah_soal) {
                     errorMessage = 'Jumlah Jawaban Benar UAS tidak valid (0-Jumlah Soal).';
                 } else if (skor_komponen < 0 || skor_komponen > 100) {
-                    errorMessage = 'Skor TTM/TO/Praktik/TMK harus antara 0 dan 100.';
+                    errorMessage = 'Skor TTM/TO/Praktik harus antara 0 dan 100.';
                 } else if (jenis_pembelajaran === "") {
                     errorMessage = 'Pilih jenis pembelajaran yang valid.';
                 }
@@ -460,41 +459,39 @@
                     case 'TTM':
                         if (skor_uas < 30 || skor_komponen < skor_uas) {
                             nilai_akhir = skor_uas;
-                            rumus_perhitungan = 'Nilai Akhir = Skor UAS (karena Skor UAS > 30 dan Skor UAS > Skor TTM)';
+                            rumus_perhitungan = 'Nilai Akhir = Skor UAS (karena Skor UAS < 30 ATAU Skor Komponen < Skor UAS)';
                         } else {
                             nilai_akhir = (0.5 * skor_uas) + (0.5 * skor_komponen);
                             rumus_perhitungan = 'Nilai Akhir = (0.5 * Skor UAS) + (0.5 * Skor Komponen TTM)';
                         }
-                        keterangan_rumus = 'Pembobotan 50% untuk UAS dan 50% untuk TTM berlaku jika nilai UAS minimal 30';
+                        keterangan_rumus = 'Pembobotan 50% untuk UAS dan 50% untuk komponen TTM (nilai tugas dan partisipasi), dengan syarat tertentu.';
                         break;
                     case 'Tutorial Online':
                         if (skor_uas < 30 || skor_komponen < skor_uas) {
                             nilai_akhir = skor_uas;
-                            rumus_perhitungan = 'Nilai Akhir = Skor UAS (karena Skor UAS > 30 dan Skor UAS > Skor Tutorial Online)';
+                            rumus_perhitungan = 'Nilai Akhir = Skor UAS (karena Skor UAS < 30 ATAU Skor Komponen < Skor UAS)';
                         } else {
                             nilai_akhir = (0.7 * skor_uas) + (0.3 * skor_komponen);
                             rumus_perhitungan = 'Nilai Akhir = (0.7 * Skor UAS) + (0.3 * Skor Komponen Tutorial Online)';
                         }
-                        keterangan_rumus = 'Pembobotan 70% untuk UAS dan 30% untuk Tutorial Online berlaku jika nilai UAS minimal 30.';
+                        keterangan_rumus = 'Pembobotan 70% untuk UAS dan 30% untuk komponen Tutorial Online (nilai tugas dan partisipasi), dengan syarat tertentu.';
                         break;
                     case 'Berpraktik':
                         nilai_akhir = (0.6 * skor_komponen) + (0.4 * skor_uas);
                         rumus_perhitungan = 'Nilai Akhir = (0.6 * Skor Komponen Praktik) + (0.4 * Skor UAS)';
-                        keterangan_rumus = 'Pembobotan 60% untuk nilai praktik dan 40% untuk UAS.';
+                        keterangan_rumus = 'Pembobotan 60% untuk nilai praktik (laporan, praktikum) dan 40% untuk UAS.';
                         break;
-                    case 'TMK':
-                        if (skor_uas < 30) {
-                            nilai_akhir = 0;
-                            rumus_perhitungan = 'Nilai Akhir = 0 (karena Skor UAS < 30)';
-                        } else if (skor_uas > skor_komponen) {
-                            nilai_akhir = skor_uas;
-                            rumus_perhitungan = 'Nilai Akhir = Skor UAS (karena Skor UAS > 30 dan Skor UAS > Skor TMK)';
-                        } else {
-                            nilai_akhir = (0.8 * skor_uas) + (0.2 * skor_komponen);
-                            rumus_perhitungan = 'Nilai Akhir = (0.8 * Skor UAS) + (0.2 * Skor Komponen TMK)';
-                        }
-                        keterangan_rumus = 'Pembobotan 80% untuk UAS dan 20% untuk komponen TMK. Ada kondisi khusus di mana nilai akhir bisa menjadi 0 jika UAS sangat rendah, atau hanya mengacu pada nilai UAS jika lebih tinggi dari TMK.';
+                    default:
+                        errorMessage = 'Jenis pembelajaran tidak dikenal.';
                         break;
+                }
+
+                if (errorMessage) {
+                    const errorMessageDiv = document.createElement('p');
+                    errorMessageDiv.className = 'error mt-3 text-center';
+                    errorMessageDiv.textContent = errorMessage;
+                    resultOutput.appendChild(errorMessageDiv);
+                    return;
                 }
 
                 const resultMudah = getGradeDetails(nilai_akhir, thresholdsByKelompok['Mudah']);
@@ -509,7 +506,7 @@
                         <p class="mb-2 text-secondary">Benar UAS: <strong class="text-success">${jumlah_benar}</strong></p>
                         <p class="mb-2 text-secondary">Soal UAS: <strong class="text-success">${jumlah_soal}</strong></p>
                         <p class="mb-2 text-secondary">Skor UAS: <strong class="text-success">${skor_uas.toFixed(2)}</strong></p>
-                        <p class="mb-2 text-secondary">Skor TTM/TO/Praktik/TMK: <strong class="text-success">${skor_komponen}</strong></p>
+                        <p class="mb-2 text-secondary">Skor TTM/TO/Praktik: <strong class="text-success">${skor_komponen}</strong></p>
                         
                         <hr class="my-3">
                         <h4 class="mb-3 text-primary fs-4">Estimasi Nilai Akhir Anda: <strong class="text-success">${nilai_akhir.toFixed(2)}</strong></h4>
