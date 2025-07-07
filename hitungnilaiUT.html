@@ -158,7 +158,7 @@
         }
 
         .btn-reset-custom {
-            background-color: #6c757d; /* Warna abu-abu Bootstrap secondary */
+            background-color: #6c757d;
             border-color: #6c757d;
             transition: background-color 0.3s ease, border-color 0.3s ease;
             padding: 0.6rem 1rem;
@@ -168,7 +168,7 @@
             color: #fff;
             cursor: pointer;
             box-sizing: border-box;
-            margin-top: 1rem; /* Tambahkan margin atas */
+            margin-top: 1rem;
         }
 
         .btn-reset-custom:hover {
@@ -526,10 +526,9 @@
                 `;
                 resultOutput.innerHTML = resultHtml;
 
-                // Tambahkan event listener untuk tombol reset
                 document.getElementById('resetButton').addEventListener('click', function() {
-                    form.reset(); // Mereset semua input di dalam form
-                    resultOutput.innerHTML = ''; // Mengosongkan area hasil
+                    form.reset();
+                    resultOutput.innerHTML = '';
                 });
             });
         });
