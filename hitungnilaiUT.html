@@ -453,32 +453,47 @@
 
                 skor_uas = (jumlah_benar / jumlah_soal) * 100;
 
+                let rumus_perhitungan = '';
+                let keterangan_rumus = '';
+
                 switch (jenis_pembelajaran) {
                     case 'TTM':
                         if (skor_uas < 30 || skor_komponen < skor_uas) {
                             nilai_akhir = skor_uas;
+                            rumus_perhitungan = 'Nilai Akhir = Skor UAS (karena Skor UAS < 30 ATAU Skor Komponen < Skor UAS)';
                         } else {
                             nilai_akhir = (0.5 * skor_uas) + (0.5 * skor_komponen);
+                            rumus_perhitungan = 'Nilai Akhir = (0.5 * Skor UAS) + (0.5 * Skor Komponen TTM)';
                         }
+                        keterangan_rumus = 'Pembobotan 50% untuk UAS dan 50% untuk komponen TTM (nilai tugas dan partisipasi), dengan syarat tertentu.';
                         break;
                     case 'Tutorial Online':
                         if (skor_uas < 30 || skor_komponen < skor_uas) {
                             nilai_akhir = skor_uas;
+                            rumus_perhitungan = 'Nilai Akhir = Skor UAS (karena Skor UAS < 30 ATAU Skor Komponen < Skor UAS)';
                         } else {
                             nilai_akhir = (0.7 * skor_uas) + (0.3 * skor_komponen);
+                            rumus_perhitungan = 'Nilai Akhir = (0.7 * Skor UAS) + (0.3 * Skor Komponen Tutorial Online)';
                         }
+                        keterangan_rumus = 'Pembobotan 70% untuk UAS dan 30% untuk komponen Tutorial Online (nilai tugas dan partisipasi), dengan syarat tertentu.';
                         break;
                     case 'Berpraktik':
                         nilai_akhir = (0.6 * skor_komponen) + (0.4 * skor_uas);
+                        rumus_perhitungan = 'Nilai Akhir = (0.6 * Skor Komponen Praktik) + (0.4 * Skor UAS)';
+                        keterangan_rumus = 'Pembobotan 60% untuk nilai praktik (laporan, praktikum) dan 40% untuk UAS.';
                         break;
                     case 'TMK':
                         if (skor_uas < 30) {
                             nilai_akhir = 0;
+                            rumus_perhitungan = 'Nilai Akhir = 0 (karena Skor UAS < 30)';
                         } else if (skor_uas > skor_komponen) {
                             nilai_akhir = skor_uas;
+                            rumus_perhitungan = 'Nilai Akhir = Skor UAS (karena Skor UAS > Skor Komponen)';
                         } else {
                             nilai_akhir = (0.8 * skor_uas) + (0.2 * skor_komponen);
+                            rumus_perhitungan = 'Nilai Akhir = (0.8 * Skor UAS) + (0.2 * Skor Komponen TMK)';
                         }
+                        keterangan_rumus = 'Pembobotan 80% untuk UAS dan 20% untuk komponen TMK. Ada kondisi khusus di mana nilai akhir bisa menjadi 0 jika UAS sangat rendah, atau hanya mengacu pada nilai UAS jika lebih tinggi dari TMK.';
                         break;
                 }
 
@@ -499,6 +514,11 @@
                         <hr class="my-3">
                         <h4 class="mb-3 text-primary">Estimasi Nilai Akhir Anda: <strong class="text-success">${nilai_akhir.toFixed(2)}</strong></h4>
                         
+                        <hr class="my-3">
+                        <h5 class="mb-3 text-primary">Bagaimana Nilai Akhir Dihitung:</h5>
+                        <p class="text-start mb-1"><small><strong>Rumus yang Digunakan:</strong> ${rumus_perhitungan}</small></p>
+                        <p class="text-start mb-3"><small><strong>Keterangan:</strong> ${keterangan_rumus}</small></p>
+
                         <div class="row justify-content-center">
                             <div class="col-md-4 mb-3">
                                 <div class="card h-100 text-bg-success">
