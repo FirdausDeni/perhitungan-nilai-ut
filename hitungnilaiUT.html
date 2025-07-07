@@ -313,6 +313,7 @@
                     <option value="TTM">TTM (Tutorial Tatap Muka)</option>
                     <option value="Tutorial Online">Tutorial Online</option>
                     <option value="Berpraktik">Berpraktik</option>
+                    <option value="TMK">TMK (Tugas Mata Kuliah)</option>
                 </select>
             </div>
 
@@ -329,7 +330,7 @@
             </div>
 
             <div class="form-group-custom">
-                <label for="skor_komponen">Skor Tutorial Tatap Muka / Tutorial Online / Tugas Berpraktik (0-100):</label>
+                <label for="skor_komponen">Skor Tutorial Tatap Muka / Tutorial Online / Tugas Berpraktik / TMK (0-100):</label>
                 <input type="number" id="skor_komponen" name="skor_komponen" min="0" max="100" required
                        class="form-control">
             </div>
@@ -437,7 +438,7 @@
                 } else if (jumlah_benar < 0 || jumlah_benar > jumlah_soal) {
                     errorMessage = 'Jumlah Jawaban Benar UAS tidak valid (0-Jumlah Soal).';
                 } else if (skor_komponen < 0 || skor_komponen > 100) {
-                    errorMessage = 'Skor TTM/TO/Praktik harus antara 0 dan 100.';
+                    errorMessage = 'Skor TTM/TO/Praktik/TMK harus antara 0 dan 100.';
                 } else if (jenis_pembelajaran === "") {
                     errorMessage = 'Pilih jenis pembelajaran yang valid.';
                 }
@@ -470,6 +471,15 @@
                     case 'Berpraktik':
                         nilai_akhir = (0.6 * skor_komponen) + (0.4 * skor_uas);
                         break;
+                    case 'TMK':
+                        if (skor_uas < 30) {
+                            nilai_akhir = 0;
+                        } else if (skor_uas > skor_komponen) {
+                            nilai_akhir = skor_uas;
+                        } else {
+                            nilai_akhir = (0.8 * skor_uas) + (0.2 * skor_komponen);
+                        }
+                        break;
                 }
 
                 const resultMudah = getGradeDetails(nilai_akhir, thresholdsByKelompok['Mudah']);
@@ -484,7 +494,7 @@
                         <p class="mb-2 text-secondary">Benar UAS: <strong class="text-success">${jumlah_benar}</strong></p>
                         <p class="mb-2 text-secondary">Soal UAS: <strong class="text-success">${jumlah_soal}</strong></p>
                         <p class="mb-2 text-secondary">Skor UAS: <strong class="text-success">${skor_uas.toFixed(2)}</strong></p>
-                        <p class="mb-2 text-secondary">Skor TTM/TO/Praktik: <strong class="text-success">${skor_komponen}</strong></p>
+                        <p class="mb-2 text-secondary">Skor TTM/TO/Praktik/TMK: <strong class="text-success">${skor_komponen}</strong></p>
                         
                         <hr class="my-3">
                         <h4 class="mb-3 text-primary">Estimasi Nilai Akhir Anda: <strong class="text-success">${nilai_akhir.toFixed(2)}</strong></h4>
