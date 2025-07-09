@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('nilaiCalculatorForm');
             const resultOutput = document.getElementById('resultOutput');
-
+            
+// Definisi ambang batas nilai berdasarkan kelompok mata kuliah.
+// Setiap kelompok (Mudah, Sedang, dan Sulit) masing-masing memiliki kriteria nilai huruf (A, A-, B, dst.)
+// beserta nilai minimum, maksimum, bobot mutu, dan predikat yang sesuai.
             const thresholdsByKelompok = {
                 'Mudah': {
                     'A': { min: 80, max: 100, mutu: 4.0, predikat: 'Sangat Baik' },
@@ -40,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 let mutu = 0;
                 let predikat = '';
 
+ // Menentukan nilai huruf berdasarkan skor yang diberikan dan ambang batas kelompok
                 if (score >= kelompokThresholds['A'].min) {
                     huruf = 'A';
                 } else if (score >= kelompokThresholds['A-'].min) {
@@ -57,7 +61,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     huruf = 'E';
                 }
-                
+
+// Setelah nilai huruf (misal A, B, C) ditemukan,
+// kode ini mencari detail lengkap dari nilai huruf itu
+// (seperti bobot mutu dan predikat Sangat Baik/Cukup/dsb.)
+// dari daftar aturan nilai yang sudah ditentukan.
                 const details = kelompokThresholds[huruf];
                 mutu = details.mutu;
                 predikat = details.predikat;
@@ -74,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     existingError.remove();
                 }
 
+ // Mengambil nilai dari input formulir                        
                 const nama_mk = document.getElementById('nama_mk').value;
                 const jenis_pembelajaran = document.getElementById('jenis_pembelajaran').value;
                 const jumlah_benar = parseInt(document.getElementById('jumlah_benar').value);
@@ -84,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 let errorMessage = '';
                 let skor_uas = 0;
 
+// Validasi input
                 if (jumlah_soal <= 0) {
                     errorMessage = 'Jumlah Soal UAS harus lebih dari 0.';
                 } else if (jumlah_benar < 0 || jumlah_benar > jumlah_soal) {
@@ -93,7 +103,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else if (jenis_pembelajaran === "") {
                     errorMessage = 'Pilih jenis pembelajaran yang valid.';
                 }
-
+                        
+  // Jika ada error validasi, tampilkan pesan error dan hentikan eksekusi
                 if (errorMessage) {
                     const errorMessageDiv = document.createElement('p');
                     errorMessageDiv.className = 'error mt-3 text-center';
@@ -102,11 +113,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
 
+// Menghitung skor UAS dalam skala 0-100
                 skor_uas = (jumlah_benar / jumlah_soal) * 100;
 
                 let rumus_perhitungan = '';
                 let keterangan_rumus = '';
-
+                        
+// Logika Perhitungan Nilai Akhir berdasarkan Jenis Pembelajaran
                 switch (jenis_pembelajaran) {
                     case 'TTM':
                         if (skor_uas < 30) {
@@ -148,6 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         break;
                 }
 
+ // Jika ada error karena jenis pembelajaran tidak dikenal, tampilkan pesan error
                 if (errorMessage) {
                     const errorMessageDiv = document.createElement('p');
                     errorMessageDiv.className = 'error mt-3 text-center';
@@ -155,7 +169,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     resultOutput.appendChild(errorMessageDiv);
                     return;
                 }
-
+                        
+// Mendapatkan detail grade untuk setiap kelompok mata kuliah (Mudah, Sedang, Sulit)
                 const resultMudah = getGradeDetails(nilai_akhir, thresholdsByKelompok['Mudah']);
                 const resultSedang = getGradeDetails(nilai_akhir, thresholdsByKelompok['Sedang']);
                 const resultSulit = getGradeDetails(nilai_akhir, thresholdsByKelompok['Sulit']);
