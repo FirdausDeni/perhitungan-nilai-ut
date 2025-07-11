@@ -1,3 +1,4 @@
+// Menunggu sampai seluruh isi halaman selesai dimuat sebelum menjalankan script
 document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('nilaiCalculatorForm');
             const resultOutput = document.getElementById('resultOutput');
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             };
 
+// Fungsi untuk menentukan huruf nilai, mutu, dan predikat berdasarkan nilai akhir dan kategori mata kuliah
             function getGradeDetails(score, kelompokThresholds) {
                 let huruf = '';
                 let mutu = 0;
@@ -229,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 `;
                 resultOutput.innerHTML = resultHtml;
-
+// Reset semua input dan hapus hasil perhitungan saat tombol "Hitung Ulang" diklik
                 document.getElementById('resetButton').addEventListener('click', function() {
                     form.reset();
                     resultOutput.innerHTML = '';
