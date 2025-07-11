@@ -166,7 +166,7 @@ body {
             border-color: #5a6268;
         }
 
-
+/* --- CSS untuk Tampilan Lebih Responsif --- */
         @media (max-width: 575.98px) {
             .container-custom {
                 padding: 1.5rem 1.75rem;
