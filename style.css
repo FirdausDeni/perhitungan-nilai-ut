@@ -4,7 +4,6 @@ html {
 /* --- CSS Dasar untuk Seluruh Halaman (Body) --- */
 body {
             font-family: 'Inter', sans-serif;
-            font-size: 14px;
             background-color: #f0f2f5;
             display: flex;
             align-items: center;
