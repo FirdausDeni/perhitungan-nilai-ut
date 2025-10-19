@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                         break;
                     case 'Berpraktik':
-                        nilai_akhir = (0.6 * skor_komponen) + (0.4 * skor_uas);
+                        nilai_akhir = (0.5 * skor_komponen) + (0.5 * skor_uas);
                         rumus_perhitungan = 'Nilai Akhir = (0.5 * Skor Komponen Praktik) + (0.5 * Skor UAS)';
                         keterangan_rumus = 'Pembobotan 50% untuk nilai praktik dan 50% untuk UAS.';
                         break;
