@@ -155,8 +155,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         break;
                     case 'Berpraktik':
                         nilai_akhir = (0.6 * skor_komponen) + (0.4 * skor_uas);
-                        rumus_perhitungan = 'Nilai Akhir = (0.6 * Skor Komponen Praktik) + (0.4 * Skor UAS)';
-                        keterangan_rumus = 'Pembobotan 60% untuk nilai praktik dan 40% untuk UAS.';
+                        rumus_perhitungan = 'Nilai Akhir = (0.5 * Skor Komponen Praktik) + (0.5 * Skor UAS)';
+                        keterangan_rumus = 'Pembobotan 50% untuk nilai praktik dan 50% untuk UAS.';
                         break;
                     default:
                         errorMessage = 'Jenis pembelajaran tidak dikenal.';
