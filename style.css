@@ -114,6 +114,24 @@ body {
             appearance: textfield;
         }
 
+/* --- CSS TAMBAHAN/PENYESUAIAN UNTUK INPUT BERPRAKTIK --- */
+        #tugas_berpraktik_container {
+            border: 1px solid #ff000030; /* Garis merah muda tipis untuk membedakan */
+            padding: 0.5rem 1rem 0.5rem 1rem;
+            border-radius: 0.25rem;
+            margin-bottom: 1.25rem; /* Tambahkan sedikit jarak di bawah container */
+        }
+        
+        #tugas_berpraktik_container p.text-danger {
+            font-weight: 500;
+            margin-top: 0;
+            margin-bottom: 0.75rem !important; /* Jarak antara peringatan dan input pertama */
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed #dc354550; /* Garis pemisah peringatan */
+        }
+/* --- AKHIR PENYESUAIAN CSS BARU --- */
+
+
 /* --- CsS untuk Penjelasan Nilai (Mudah, Sedang, Sulit) --- */
         .card {
             border: none;
@@ -145,6 +163,15 @@ body {
         .text-bg-danger {
             background-color: #dc3545 !important;
             color: #fff !important;
+        }
+
+        /* Penyesuaian untuk kartu rekomendasi "SULIT" pada MK Berpraktik */
+        .text-bg-danger.border-primary {
+            border: 3px solid #0d6efd !important;
+            box-shadow: 0 4px 10px rgba(13, 110, 253, 0.4);
+        }
+        .text-bg-danger.border-primary .bg-primary {
+            background-color: #0d6efd !important;
         }
 
         .btn-reset-custom {
