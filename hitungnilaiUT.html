@@ -53,12 +53,28 @@
                        class="form-control">
             </div>
 
-            <div class="form-group-custom">
-                <label for="skor_komponen">Skor Tutorial Tatap Muka / Tutorial Online / Tugas Berpraktik (0-100):</label>
+            <div class="form-group-custom" id="skor_komponen_container">
+                <label for="skor_komponen" id="skor_komponen_label">Skor Tutorial Tatap Muka / Tutorial Online / Tugas Berpraktik (0-100):</label>
                 <input type="number" id="skor_komponen" name="skor_komponen" min="0" max="100" required
                        class="form-control">
             </div>
 
+            <div id="tugas_berpraktik_container" style="display:none;">
+                <p class="text-danger small mt-2">Masukkan skor T1, T2, dan T3 (0-100). Jika salah satu diisi 0/kosong, nilai akhir otomatis **E**.</p>
+                <div class="form-group-custom">
+                    <label for="tugas1">Skor Praktik Online (Tugas 1):</label>
+                    <input type="number" id="tugas1" name="tugas1" min="0" max="100" class="form-control">
+                </div>
+                <div class="form-group-custom">
+                    <label for="tugas2">Skor Praktik Online (Tugas 2):</label>
+                    <input type="number" id="tugas2" name="tugas2" min="0" max="100" class="form-control">
+                </div>
+                <div class="form-group-custom">
+                    <label for="tugas3">Skor Praktik Online (Tugas 3):</label>
+                    <input type="number" id="tugas3" name="tugas3" min="0" max="100" class="form-control">
+                </div>
+            </div>
+            
             <button type="submit" id="hitungButton"
                     class="btn btn-primary-custom w-100">
                 Hitung Nilai
