@@ -3,8 +3,6 @@
 
 Kakulator Nilai Akhir Universitar Terbuka adalah tools yang dapat membantu mahasiswa Universitas Terbuka yang ingin mengecek perkiraan nilai akhir mata kuliah tertentu. Perhitungan bersumber dari Katalog Penyelenggara Universitas Terbuka.
 
-Update: Terdapat kesalahan penulisan perhitungan nilai mata kuliah berpraktik jurusan Sistem Informasi pada Katalog Penyelenggara. Perhitungan yang benar adalah Nilai akhir mata kuliah diambil dari nilai  praktik online 50%  (Tugas 1, 2 dan 3) dan  UAS (50%). Pengerjaan tugas harus lengkap, jika salah satu  tugas tidak ada, maka nilai akhir mata kuliah adalah E. 
-
 Berikut ini cara menggunakannya.
 
 a. Akses terlebih dahulu laman https://firdausdeni.github.io/perhitungan-nilai-ut/hitungnilaiUT.html
