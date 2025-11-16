@@ -1,9 +1,122 @@
-// FILE: script.js (Versi Final dengan Perbaikan Konversi Nilai)
-
-// ... (Bagian Thresholds dan getGradeDetails tetap sama) ...
-
-            // ... (Kode setup form, toggleInputs, dan event listener tetap sama) ...
+// Menunggu sampai seluruh isi halaman selesai dimuat sebelum menjalankan script
+document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('nilaiCalculatorForm');
+            const resultOutput = document.getElementById('resultOutput');
             
+            const thresholdsByKelompok = {
+                'Mudah': {
+                    'A': { min: 80, max: 100, mutu: 4.0, predikat: 'Sangat Baik' },
+                    'A-': { min: 75, max: 79, mutu: 3.5, predikat: 'Sangat Baik' },
+                    'B': { min: 70, max: 74, mutu: 3.0, predikat: 'Baik' },
+                    'B-': { min: 65, max: 69, mutu: 2.5, predikat: 'Baik' },
+                    'C': { min: 55, max: 64, mutu: 2.0, predikat: 'Cukup' },
+                    'C-': { min: 50, max: 54, mutu: 1.5, predikat: 'Cukup' },
+                    'D': { min: 40, max: 49, mutu: 1.0, predikat: 'Kurang' },
+                    'E': { min: 0, max: 39, mutu: 0.0, predikat: 'Tidak Lulus' }
+                },
+                'Sedang': {
+                    'A': { min: 75, max: 100, mutu: 4.0, predikat: 'Sangat Baik' },
+                    'A-': { min: 70, max: 74, mutu: 3.5, predikat: 'Sangat Baik' },
+                    'B': { min: 65, max: 69, mutu: 3.0, predikat: 'Baik' },
+                    'B-': { min: 55, max: 64, mutu: 2.5, predikat: 'Baik' },
+                    'C': { min: 50, max: 54, mutu: 2.0, predikat: 'Cukup' },
+                    'C-': { min: 45, max: 49, mutu: 1.5, predikat: 'Cukup' },
+                    'D': { min: 35, max: 44, mutu: 1.0, predikat: 'Kurang' },
+                    'E': { min: 0, max: 34, mutu: 0.0, predikat: 'Tidak Lulus' }
+                },
+                'Sulit': {
+                    'A': { min: 70, max: 100, mutu: 4.0, predikat: 'Sangat Baik' },
+                    'A-': { min: 65, max: 69, mutu: 3.5, predikat: 'Sangat Baik' },
+                    'B': { min: 60, max: 64, mutu: 3.0, predikat: 'Baik' },
+                    'B-': { min: 55, max: 59, mutu: 2.5, predikat: 'Baik' },
+                    'C': { min: 45, max: 54, mutu: 2.0, predikat: 'Cukup' },
+                    'C-': { min: 40, max: 44, mutu: 1.5, predikat: 'Cukup' },
+                    'D': { min: 30, max: 39, mutu: 1.0, predikat: 'Kurang' },
+                    'E': { min: 0, max: 29, mutu: 0.0, predikat: 'Tidak Lulus' }
+                }
+            };
+
+            function getGradeDetails(score, kelompokThresholds) {
+                let huruf = '';
+                // ... (Logika konversi nilai huruf tetap sama) ...
+                if (score >= kelompokThresholds['A'].min) {
+                    huruf = 'A';
+                } else if (score >= kelompokThresholds['A-'].min) {
+                    huruf = 'A-';
+                } else if (score >= kelompokThresholds['B'].min) {
+                    huruf = 'B';
+                } else if (score >= kelompokThresholds['B-'].min) {
+                    huruf = 'B-';
+                } else if (score >= kelompokThresholds['C'].min) {
+                    huruf = 'C';
+                } else if (score >= kelompokThresholds['C-'].min) {
+                    huruf = 'C-';
+                } else if (score >= kelompokThresholds['D'].min) {
+                    huruf = 'D';
+                } else {
+                    huruf = 'E';
+                }
+
+                const details = kelompokThresholds[huruf];
+                const mutu = details.mutu;
+                const predikat = details.predikat;
+
+                return { huruf, mutu, predikat };
+            }
+
+            // --- FUNGSI PENTING UNTUK MENGONTROL INPUT BERPRAKTIK (TOGGLE INPUTS) ---
+            const jenisPembelajaranSelect = document.getElementById('jenis_pembelajaran');
+            const skorKomponenContainer = document.getElementById('skor_komponen_container');
+            const skorKomponenInput = document.getElementById('skor_komponen');
+            const skorKomponenLabel = document.getElementById('skor_komponen_label');
+            const tugasBerpraktikContainer = document.getElementById('tugas_berpraktik_container');
+            const tugas1Input = document.getElementById('tugas1');
+            const tugas2Input = document.getElementById('tugas2');
+            const tugas3Input = document.getElementById('tugas3');
+
+            function toggleInputs() {
+                const jenis = jenisPembelajaranSelect.value;
+                if (jenis === 'Berpraktik') {
+                    // Sembunyikan input umum dan hapus requirement
+                    skorKomponenContainer.style.display = 'none';
+                    skorKomponenInput.removeAttribute('required');
+                    skorKomponenInput.value = '';
+
+                    // Tampilkan 3 input tugas dan tambahkan requirement
+                    tugasBerpraktikContainer.style.display = 'block';
+                    tugas1Input.setAttribute('required', 'required');
+                    tugas2Input.setAttribute('required', 'required');
+                    tugas3Input.setAttribute('required', 'required');
+                    
+                } else {
+                    // Tampilkan input umum dan tambahkan requirement
+                    skorKomponenContainer.style.display = 'block';
+                    skorKomponenInput.setAttribute('required', 'required');
+
+                    // Update label sesuai jenis pembelajaran
+                    if (jenis === 'TTM' || jenis === 'Tutorial Online') {
+                        skorKomponenLabel.textContent = `Skor ${jenis} (0-100):`;
+                    } else {
+                        skorKomponenLabel.textContent = `Skor Tutorial Tatap Muka / Tutorial Online / Tugas Berpraktik (0-100):`;
+                    }
+                    
+                    // Sembunyikan 3 input tugas dan hapus requirement
+                    tugasBerpraktikContainer.style.display = 'none';
+                    tugas1Input.removeAttribute('required');
+                    tugas2Input.removeAttribute('required');
+                    tugas3Input.removeAttribute('required');
+                    tugas1Input.value = '';
+                    tugas2Input.value = '';
+                    tugas3Input.value = '';
+                }
+            }
+
+            // Panggil fungsi saat terjadi perubahan dan saat halaman dimuat
+            jenisPembelajaranSelect.addEventListener('change', toggleInputs);
+            toggleInputs(); 
+            // --- AKHIR FUNGSI TOGGLE INPUTS ---
+
+
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
 
@@ -13,7 +126,6 @@
                     existingError.remove();
                 }
 
-                // Mengambil nilai dari input formulir                        
                 const nama_mk = document.getElementById('nama_mk').value;
                 const jenis_pembelajaran = document.getElementById('jenis_pembelajaran').value;
                 const jumlah_benar = parseInt(document.getElementById('jumlah_benar').value);
@@ -52,13 +164,16 @@
 
                 // --- LOGIKA CEK SYARAT MUTLAK BERPRAKTIK ---
                 if (jenis_pembelajaran === 'Berpraktik') {
+                    // Gunakan parseFloat(document.getElementById('tugasX').value) || 0 untuk menangani input kosong/nol
                     const t1 = parseFloat(document.getElementById('tugas1').value) || 0;
                     const t2 = parseFloat(document.getElementById('tugas2').value) || 0;
                     const t3 = parseFloat(document.getElementById('tugas3').value) || 0;
                     
+                    // Cek Syarat Mutlak E: Jika salah satu Tugas bernilai 0
                     if (t1 === 0 || t2 === 0 || t3 === 0) {
                         tugas_berpraktik_error = true;
                     } else {
+                        // Jika tugas lengkap, hitung rata-rata praktik
                         skor_praktik_rata2 = (t1 + t2 + t3) / 3;
                     }
                 }
@@ -68,6 +183,7 @@
                 
                 let rumus_perhitungan = '';
                 let keterangan_rumus = '';
+                // Ambil nilai tugas saat ini (untuk ditampilkan di keterangan E)
                 let t1_val = tugas_berpraktik_error ? (document.getElementById('tugas1').value || '0') : '';
                 let t2_val = tugas_berpraktik_error ? (document.getElementById('tugas2').value || '0') : '';
                 let t3_val = tugas_berpraktik_error ? (document.getElementById('tugas3').value || '0') : '';
@@ -76,6 +192,7 @@
 // Logika Perhitungan Nilai Akhir berdasarkan Jenis Pembelajaran
                 switch (jenis_pembelajaran) {
                     case 'TTM':
+                        // Logika TTM 50%-50%
                         if (skor_uas < 30) {
                             nilai_akhir = skor_uas;
                             rumus_perhitungan = 'Nilai Akhir = Skor UAS (Otomatis E)';
@@ -91,6 +208,7 @@
                         }
                         break;
                     case 'Tutorial Online':
+                        // Logika Tutorial Online 70%-30%
                         if (skor_uas < 30) {
                             nilai_akhir = skor_uas;
                             rumus_perhitungan = 'Nilai Akhir = Skor UAS (Otomatis E)';
@@ -107,13 +225,15 @@
                         break;
                     case 'Berpraktik':
                         if (tugas_berpraktik_error) {
+                            // Syarat Mutlak E
                             nilai_akhir = 0;
                             rumus_perhitungan = 'Nilai Akhir = E (Otomatis)';
                             keterangan_rumus = `Nilai akhir otomatis E karena salah satu (atau lebih) Tugas Praktik (T1: ${t1_val}, T2: ${t2_val}, T3: ${t3_val}) tidak lengkap/kosong, sesuai ralat Kaprodi.`;
                         } else {
+                            // Logika Berpraktik 50%-50%
                             nilai_akhir = (0.5 * skor_praktik_rata2) + (0.5 * skor_uas);
                             rumus_perhitungan = 'Nilai Akhir = (0.5 * Rata-rata Skor Praktik Online) + (0.5 * Skor UAS)';
-                            keterangan_rumus = `Pembobotan 50% untuk rata-rata nilai praktik (T1, T2, T3) dan 50% untuk UAS. **Konversi ke nilai huruf menggunakan ambang batas Kelompok Sulit.**`; // Keterangan tambahan
+                            keterangan_rumus = `Pembobotan 50% untuk rata-rata nilai praktik (T1, T2, T3) dan 50% untuk UAS. **Konversi ke nilai huruf menggunakan ambang batas Kelompok Sulit.**`;
                         }
                         break;
                     default:
@@ -130,10 +250,7 @@
                     return;
                 }
                         
-// --- PERBAIKAN LOGIKA KONVERSI NILAI ---
-// Jika Berpraktik, hasilkan 3 kartu namun berikan penekanan pada kategori "Sulit"
-// Jika TTM/TO, tampilkan 3 kartu untuk estimasi.
-                
+// --- LOGIKA KONVERSI DAN TAMPILAN HASIL ---
                 const resultMudah = getGradeDetails(nilai_akhir, thresholdsByKelompok['Mudah']);
                 const resultSedang = getGradeDetails(nilai_akhir, thresholdsByKelompok['Sedang']);
                 const resultSulit = getGradeDetails(nilai_akhir, thresholdsByKelompok['Sulit']);
@@ -141,7 +258,7 @@
                 let finalResultHtml = '';
                 
                 if (jenis_pembelajaran === 'Berpraktik') {
-                    // Jika MK Berpraktik, tampilkan hasil Sulit di posisi pertama dan beri label peringatan
+                    // Tampilkan kartu Sulit sebagai rekomendasi utama
                     finalResultHtml = `
                         <div class="alert alert-info text-center mt-3" role="alert">
                             <i class="fas fa-info-circle"></i> **PERHATIAN:** Untuk MK Berpraktik, konversi nilai akhir **biasanya** menggunakan ambang batas **Kelompok Sulit**.
@@ -180,7 +297,7 @@
                         </div>
                     `;
                 } else {
-                    // Jika MK TTM/TO, tampilkan 3 kartu seperti biasa
+                    // Tampilan 3 kartu biasa untuk TTM/TO
                     finalResultHtml = `
                         <div class="row justify-content-center">
                             <div class="col-md-4 mb-3">
