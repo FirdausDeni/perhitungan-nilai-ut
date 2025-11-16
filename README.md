@@ -14,3 +14,5 @@ c. Klik hitung nilai dan hasilnya akan Anda lihat pada bagian bawah.
 d. Klik hitung ulang jika ingin menghitung mata kuliah lainnya.
 
 NOTE: Hasil hanya bersifat estimasi, bukan sebenarnya. Nilai sebenarnya bisa dilihat di dashboard MyUT pada saat pengumuman nilai
+
+Update: Terdapat kesalahan penulisan perhitungan nilai mata kuliah berpraktik jurusan Sistem Informasi pada Katalog Penyelenggara. Perhitungan yang benar adalah Nilai akhir mata kuliah diambil dari nilai  praktik online 50%  (Tugas 1, 2 dan 3) dan  UAS (40%). Pengerjaan tugas harus lengkap, jika salah satu  tugas tidak ada, maka nilai akhir mata kuliah adalah E. 
