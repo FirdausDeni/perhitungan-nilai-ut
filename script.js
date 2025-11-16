@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (tugas_berpraktik_error) {
                             nilai_akhir = 0;
                             rumus_perhitungan = 'Nilai Akhir = E (Otomatis)';
-                            keterangan_rumus = `Nilai akhir otomatis E karena salah satu (atau lebih) Tugas Praktik (T1: ${t1_val}, T2: ${t2_val}, T3: ${t3_val}) tidak lengkap/kosong.`;
+                            keterangan_rumus = `Nilai akhir otomatis E karena tugas berpraktik tidak lengkap/kosong.`;
                         } else {
                             nilai_akhir = (0.5 * skor_praktik_rata2) + (0.5 * skor_uas);
                             rumus_perhitungan = 'Nilai Akhir = (0.5 * Rata-rata Skor Praktik Online) + (0.5 * Skor UAS)';
@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="row justify-content-center">
                             <div class="col-md-4 mb-3">
                                 <div class="card h-100 text-bg-danger border-primary">
-                                    <div class="card-header fw-bold bg-primary text-white">Kelompok Matkul: SULIT (Rekomendasi)</div>
+                                    <div class="card-header fw-bold bg-primary text-white">Kelompok Matkul: Sulit</div>
                                     <div class="card-body">
                                         <h5 class="card-title">Huruf: ${resultSulit.huruf}</h5>
                                         <p class="card-text mb-0">Mutu: ${resultSulit.mutu.toFixed(1)}</p>
@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                             <div class="col-md-4 mb-3">
                                 <div class="card h-100 text-bg-warning">
-                                    <div class="card-header fw-bold">Kelompok Matkul: Sedang (Perbandingan)</div>
+                                    <div class="card-header fw-bold">Kelompok Matkul: Sedang</div>
                                     <div class="card-body">
                                         <h5 class="card-title">Huruf: ${resultSedang.huruf}</h5>
                                         <p class="card-text mb-0">Mutu: ${resultSedang.mutu.toFixed(1)}</p>
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                             <div class="col-md-4 mb-3">
                                 <div class="card h-100 text-bg-success">
-                                    <div class="card-header fw-bold">Kelompok Matkul: Mudah (Perbandingan)</div>
+                                    <div class="card-header fw-bold">Kelompok Matkul: Mudah</div>
                                     <div class="card-body">
                                         <h5 class="card-title">Huruf: ${resultMudah.huruf}</h5>
                                         <p class="card-text mb-0">Mutu: ${resultMudah.mutu.toFixed(1)}</p>
