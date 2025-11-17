@@ -12,9 +12,9 @@ body {
 
 /* --- CSS untuk Logo Universitas Terbuka (UT) --- */
 .logo-container {
-    text-align: center;      /* Memusatkan gambar */
-    margin-bottom: 1.5rem;   /* Jarak antara logo dan judul */
-    margin-top: 0.5rem;      /* Jarak di atas logo */
+    text-align: center;      
+    margin-bottom: 1.5rem;   
+    margin-top: 0.5rem;      
 }
 
 .ut-logo {
@@ -128,22 +128,21 @@ body {
             appearance: textfield;
         }
 
-/* --- CSS TAMBAHAN/PENYESUAIAN UNTUK INPUT BERPRAKTIK --- */
+/* --- CSS UNTUK INPUT BERPRAKTIK --- */
         #tugas_berpraktik_container {
-            border: 1px solid #ff000030; /* Garis merah muda tipis untuk membedakan */
+            border: 1px solid #ff000030; 
             padding: 0.5rem 1rem 0.5rem 1rem;
             border-radius: 0.25rem;
-            margin-bottom: 1.25rem; /* Tambahkan sedikit jarak di bawah container */
+            margin-bottom: 1.25rem;
         }
         
         #tugas_berpraktik_container p.text-danger {
             font-weight: 500;
             margin-top: 0;
-            margin-bottom: 0.75rem !important; /* Jarak antara peringatan dan input pertama */
+            margin-bottom: 0.75rem !important; 
             padding-bottom: 0.5rem;
-            border-bottom: 1px dashed #dc354550; /* Garis pemisah peringatan */
+            border-bottom: 1px dashed #dc354550; 
         }
-/* --- AKHIR PENYESUAIAN CSS BARU --- */
 
 
 /* --- CsS untuk Penjelasan Nilai (Mudah, Sedang, Sulit) --- */
@@ -179,7 +178,7 @@ body {
             color: #fff !important;
         }
 
-        /* Penyesuaian untuk kartu rekomendasi "SULIT" pada MK Berpraktik */
+        
         .text-bg-danger.border-primary {
             border: 3px solid #0d6efd !important;
             box-shadow: 0 4px 10px rgba(13, 110, 253, 0.4);
@@ -209,7 +208,7 @@ body {
 
 /* --- CSS untuk Tampilan Lebih Responsif --- */
         @media (max-width: 575.98px) {
-            /* PENTING: Penyesuaian body untuk mendekatkan konten ke URL Bar */
+         
             body {
                 padding-top: 0.5rem;
                 padding-bottom: 0.5rem;
