@@ -10,6 +10,20 @@ body {
             box-sizing: border-box;
         }
 
+/* --- CSS untuk Logo Universitas Terbuka (UT) --- */
+.logo-container {
+    text-align: center;      /* Memusatkan gambar */
+    margin-bottom: 1.5rem;   /* Jarak antara logo dan judul */
+    margin-top: 0.5rem;      /* Jarak di atas logo */
+}
+
+.ut-logo {
+    max-width: 100px; /* Lebar maksimum logo untuk desktop/tablet */
+    height: auto;     /* Memastikan rasio aspek terjaga */
+}
+/* --- Akhir CSS Logo --- */
+
+
 /* --- CSs untuk Kontainer Utama Kalkulator --- */
         .container-custom {
             background-color: #fff;
@@ -195,6 +209,24 @@ body {
 
 /* --- CSS untuk Tampilan Lebih Responsif --- */
         @media (max-width: 575.98px) {
+            /* PENTING: Penyesuaian body untuk mendekatkan konten ke URL Bar */
+            body {
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            /* Penyesuaian Logo di Ponsel */
+            .logo-container {
+                margin-bottom: 0.75rem; 
+                margin-top: 0.5rem;   
+            }
+
+            .ut-logo {
+                max-width: 70px; 
+            }
+            
             .container-custom {
                 padding: 1.5rem 1.75rem;
                 max-width: 95%;
