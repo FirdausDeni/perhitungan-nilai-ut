@@ -139,8 +139,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 let skor_uas = 0;
                 let skor_praktik_rata2 = 0;
                 let tugas_berpraktik_error = false;
-                
-                // Validasi input umum tetap
+              
+  
                 if (jumlah_soal <= 0) {
                     errorMessage = 'Jumlah Soal UAS harus lebih dari 0.';
                 } else if (jumlah_benar < 0 || jumlah_benar > jumlah_soal) {
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const t2 = parseFloat(document.getElementById('tugas2').value) || 0;
                     const t3 = parseFloat(document.getElementById('tugas3').value) || 0;
                     
-                    // Cek Syarat Mutlak E: Jika salah satu Tugas bernilai 0
+                    // Cek Syarat Nilai E: Jika salah satu Tugas bernilai 0
                     if (t1 === 0 || t2 === 0 || t3 === 0) {
                         tugas_berpraktik_error = true;
                     } else {
@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                         break;
                     case 'Berpraktik':
-                        // Logika Berpraktik (KOREKSI FINAL)
+                        
                         if (tugas_berpraktik_error) {
                             nilai_akhir = 0;
                             rumus_perhitungan = 'Nilai Akhir = E (Otomatis)';
