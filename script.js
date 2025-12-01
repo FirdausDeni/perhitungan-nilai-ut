@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
 
-                // --- LOGIKA CEK SYARAT MUTLAK BERPRAKTIK YANG DIMODIFIKASI ---
+                // --- LOGIKA CEK SYARAT MUTLAK BERPRAKTIK 
                 if (jenis_pembelajaran === 'Berpraktik') {
                     // Ambil nilai string mentah untuk membedakan antara kosong dan nilai 0
                     const t1_raw = document.getElementById('tugas1').value;
@@ -170,12 +170,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (t1_raw === '' || t2_raw === '' || t3_raw === '') {
                         tugas_berpraktik_error = true; // Otomatis E jika ada yang kosong (tidak dikerjakan)
                     } else {
-                        // 2. Jika semua input terisi (termasuk nilai 0 eksplisit), lakukan perhitungan normal
+                       
                         const t1 = parseFloat(t1_raw);
                         const t2 = parseFloat(t2_raw);
                         const t3 = parseFloat(t3_raw);
                         
-                        // Cek validasi range 0-100 dan NaN (fallback untuk type="number")
                         if (isNaN(t1) || isNaN(t2) || isNaN(t3) || t1 < 0 || t1 > 100 || t2 < 0 || t2 > 100 || t3 < 0 || t3 > 100) {
                             errorMessage = 'Skor Tugas Praktik harus antara 0 dan 100.';
                         } else {
@@ -184,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     }
                 }
-                // --- AKHIR LOGIKA CEK SYARAT MUTLAK BERPRAKTIK YANG DIMODIFIKASI ---
+                // 
 
                 if (errorMessage) {
                     const errorMessageDiv = document.createElement('p');
@@ -203,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Logika Perhitungan Nilai Akhir berdasarkan Jenis Pembelajaran
                 switch (jenis_pembelajaran) {
                     case 'TTM':
-                        // Logika TTM 50%-50% (TETAP)
+                       
                         if (skor_uas < 30) {
                             nilai_akhir = skor_uas;
                             rumus_perhitungan = 'Nilai Akhir = Skor UAS (Otomatis E)';
@@ -219,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                         break;
                     case 'Tutorial Online':
-                        // Logika Tutorial Online 70%-30% (TETAP)
+                      
                         if (skor_uas < 30) {
                             nilai_akhir = skor_uas;
                             rumus_perhitungan = 'Nilai Akhir = Skor UAS (Otomatis E)';
