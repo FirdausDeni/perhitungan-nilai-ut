@@ -159,31 +159,48 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
 
-                // --- LOGIKA CEK SYARAT MUTLAK BERPRAKTIK ---
+                // --- LOGIKA CEK SYARAT MUTLAK BERPRAKTIK YANG DIMODIFIKASI ---
                 if (jenis_pembelajaran === 'Berpraktik') {
-                    const t1 = parseFloat(document.getElementById('tugas1').value) || 0;
-                    const t2 = parseFloat(document.getElementById('tugas2').value) || 0;
-                    const t3 = parseFloat(document.getElementById('tugas3').value) || 0;
-                    
-                    // Cek Syarat Nilai E: Jika salah satu Tugas bernilai 0
-                    if (t1 === 0 || t2 === 0 || t3 === 0) {
-                        tugas_berpraktik_error = true;
+                    // Ambil nilai string mentah untuk membedakan antara kosong dan nilai 0
+                    const t1_raw = document.getElementById('tugas1').value;
+                    const t2_raw = document.getElementById('tugas2').value;
+                    const t3_raw = document.getElementById('tugas3').value;
+    
+                    // 1. Cek Syarat Mutlak (Tidak boleh ada input kosong/tidak diisi)
+                    if (t1_raw === '' || t2_raw === '' || t3_raw === '') {
+                        tugas_berpraktik_error = true; // Otomatis E jika ada yang kosong (tidak dikerjakan)
                     } else {
-                        skor_praktik_rata2 = (t1 + t2 + t3) / 3;
+                        // 2. Jika semua input terisi (termasuk nilai 0 eksplisit), lakukan perhitungan normal
+                        const t1 = parseFloat(t1_raw);
+                        const t2 = parseFloat(t2_raw);
+                        const t3 = parseFloat(t3_raw);
+                        
+                        // Cek validasi range 0-100 dan NaN (fallback untuk type="number")
+                        if (isNaN(t1) || isNaN(t2) || isNaN(t3) || t1 < 0 || t1 > 100 || t2 < 0 || t2 > 100 || t3 < 0 || t3 > 100) {
+                            errorMessage = 'Skor Tugas Praktik harus antara 0 dan 100.';
+                        } else {
+                            tugas_berpraktik_error = false; // Pastikan false
+                            skor_praktik_rata2 = (t1 + t2 + t3) / 3;
+                        }
                     }
                 }
-                // --- AKHIR LOGIKA CEK SYARAT MUTLAK BERPRAKTIK ---
+                // --- AKHIR LOGIKA CEK SYARAT MUTLAK BERPRAKTIK YANG DIMODIFIKASI ---
+
+                if (errorMessage) {
+                    const errorMessageDiv = document.createElement('p');
+                    errorMessageDiv.className = 'error mt-3 text-center';
+                    errorMessageDiv.textContent = errorMessage;
+                    resultOutput.appendChild(errorMessageDiv);
+                    return;
+                }
 
                 skor_uas = (jumlah_benar / jumlah_soal) * 100;
                 
                 let rumus_perhitungan = '';
                 let keterangan_rumus = '';
-                let t1_val = tugas_berpraktik_error ? (document.getElementById('tugas1').value || '0') : '';
-                let t2_val = tugas_berpraktik_error ? (document.getElementById('tugas2').value || '0') : '';
-                let t3_val = tugas_berpraktik_error ? (document.getElementById('tugas3').value || '0') : '';
-
-
-// Logika Perhitungan Nilai Akhir berdasarkan Jenis Pembelajaran
+                // Variabel t1_val, t2_val, t3_val tidak lagi digunakan di sini
+              
+                // Logika Perhitungan Nilai Akhir berdasarkan Jenis Pembelajaran
                 switch (jenis_pembelajaran) {
                     case 'TTM':
                         // Logika TTM 50%-50% (TETAP)
@@ -222,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (tugas_berpraktik_error) {
                             nilai_akhir = 0;
                             rumus_perhitungan = 'Nilai Akhir = E (Otomatis)';
-                            keterangan_rumus = `Nilai akhir otomatis E karena tugas berpraktik tidak lengkap/kosong.`;
+                            keterangan_rumus = `Nilai akhir otomatis E karena salah satu tugas berpraktik tidak diisi/dikerjakan.`; // Pesan disesuaikan
                         } else {
                             nilai_akhir = (0.5 * skor_praktik_rata2) + (0.5 * skor_uas);
                             rumus_perhitungan = 'Nilai Akhir = (0.5 * Rata-rata Skor Praktik Online) + (0.5 * Skor UAS)';
