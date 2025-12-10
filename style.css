@@ -311,10 +311,6 @@ body {
                 padding: 2.5rem 4rem;
             }
 
-            h2 {
-                font-size: 2.2rem;
-            }
-
             .btn-reset-custom {
                 margin-top: 1.25rem;
             }
@@ -354,7 +350,8 @@ body {
     .logo-container,
     h2,
     #nilaiCalculatorForm,
-    .d-grid.gap-2.d-sm-block.mt-3 { /* Target div yang membungkus tombol cetak dan reset */
+    /* TARGET SPESIFIK DIV TOMBOL CETAK DAN HITUNG ULANG */
+    .d-grid.gap-2.d-sm-block.mt-3 { 
         display: none !important;
     }
     
