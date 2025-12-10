@@ -340,3 +340,74 @@ body {
             .result .fs-4 { font-size: 1.3rem !important; }
             .btn-reset-custom { padding: 0.4rem 0.7rem; font-size: 0.9rem; margin-top: 0.75rem;}
         }
+
+/* --- CSS untuk Tampilan Saat Mencetak (Print) --- */
+@media print {
+    /* Sembunyikan elemen yang tidak perlu dicetak */
+    body {
+        background-color: #fff !important;
+        display: block !important;
+        min-height: auto !important;
+        padding: 0 !important;
+    }
+    
+    .logo-container,
+    h2,
+    #nilaiCalculatorForm,
+    .d-grid.gap-2.d-sm-block.mt-3 { /* Target div yang membungkus tombol cetak dan reset */
+        display: none !important;
+    }
+    
+    .container-custom {
+        box-shadow: none !important;
+        max-width: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .result {
+        border: none !important;
+        padding: 0 !important;
+        margin-top: 0 !important;
+        background-color: #fff !important;
+    }
+    
+    /* Pastikan warna teks terbaca jelas (hitam) */
+    .result, .result p, .result h4, .result h5 {
+        color: #000 !important;
+    }
+    .text-secondary {
+        color: #333 !important;
+    }
+    .text-success {
+        color: #198754 !important; /* Keep success color */
+    }
+    .text-primary {
+        color: #0d6efd !important; /* Keep primary color */
+    }
+
+    /* Pastikan kotak card hasil tetap terlihat saat dicetak */
+    .card {
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+    }
+    
+    .card-header {
+        border-bottom: 1px solid #ccc !important;
+        background-color: #eee !important;
+    }
+    
+    /* Hapus warna latar belakang yang kuat agar tinta printer hemat */
+    .text-bg-success, .text-bg-warning, .text-bg-danger {
+        background-color: #f8f9fa !important;
+        color: #212529 !important;
+        border: 1px solid #dee2e6 !important;
+    }
+    .text-bg-danger.border-primary {
+        border: 1px solid #dee2e6 !important;
+        box-shadow: none !important;
+    }
+    .text-bg-danger.border-primary .bg-primary {
+        background-color: #dee2e6 !important;
+        color: #212529 !important;
+    }
+}
