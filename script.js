@@ -368,7 +368,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         ${finalResultHtml}
                         
-                        <button type="button" id="resetButton" class="btn btn-reset-custom w-100">Hitung Ulang</button>
+                        <div class="d-grid gap-2 d-sm-block mt-3">
+                            <button type="button" id="printButton" class="btn btn-primary-custom w-100 mb-2 mb-sm-0">
+                                Cetak Hasil
+                            </button>
+                            <button type="button" id="resetButton" class="btn btn-reset-custom w-100">
+                                Hitung Ulang
+                            </button>
+                        </div>
                     </div>
                 `;
                 resultOutput.innerHTML = resultHtml;
@@ -378,5 +385,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     resultOutput.innerHTML = '';
                     toggleInputs();
                 });
+                
+                // --- FUNGSI CETAK ---
+                document.getElementById('printButton').addEventListener('click', function() {
+                    window.print();
+                });
+                // -------------------------
+
             });
         });
