@@ -18,8 +18,8 @@ body {
 }
 
 .ut-logo {
-    max-width: 100px; /* Lebar maksimum logo untuk desktop/tablet */
-    height: auto;     /* Memastikan rasio aspek terjaga */
+    max-width: 100px; 
+    height: auto;     
 }
 /* --- Akhir CSS Logo --- */
 
@@ -366,9 +366,11 @@ body {
         padding: 0 !important;
         margin-top: 0 !important;
         background-color: #fff !important;
+        /* BARU: Pastikan konten di dalam .result tidak terpotong ke halaman berikutnya */
+        page-break-inside: avoid; 
     }
     
-    /* Pastikan warna teks terbaca jelas (hitam) */
+    /* Warna teks terbaca jelas (hitam) */
     .result, .result p, .result h4, .result h5 {
         color: #000 !important;
     }
@@ -382,7 +384,7 @@ body {
         color: #0d6efd !important; /* Keep primary color */
     }
 
-    /* Pastikan kotak card hasil tetap terlihat saat dicetak */
+   
     .card {
         border: 1px solid #ccc !important;
         box-shadow: none !important;
