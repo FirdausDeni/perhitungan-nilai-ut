@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 const resultHtml = `
                     <div class="result p-4 text-center">
-                        <p class="mb-2 text-secondary">Hasil Perhitungan untuk MK: <strong class="text-success">${nama_mk}</strong></p>
+                        <p class="mb-2 text-secondary">Hasil Perhitungan untuk MK: <strong class="text-success" id="nama_mk_output"></strong></p>
                         <p class="mb-2 text-secondary">Jenis Pembelajaran: <strong class="text-success">${jenis_pembelajaran}</strong></p>
                         
                         <p class="mb-2 text-secondary">Benar UAS: <strong class="text-success">${jumlah_benar}</strong></p>
@@ -380,6 +380,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
                 resultOutput.innerHTML = resultHtml;
 
+                // FIX KEAMANAN XSS: Menggunakan textContent untuk menyisipkan nama_mk agar aman dari injeksi HTML/script
+                const namaMkOutputElement = document.getElementById('nama_mk_output');
+                if (namaMkOutputElement) {
+                    namaMkOutputElement.textContent = nama_mk;
+                }
+                // AKHIR FIX KEAMANAN XSS
+                
                 document.getElementById('resetButton').addEventListener('click', function() {
                     form.reset();
                     resultOutput.innerHTML = '';
